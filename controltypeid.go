@@ -1,5 +1,7 @@
 package w32uiautomation
 
+type CONTROLTYPEID uintptr
+
 const (
 	UIA_ButtonControlTypeId      = 50000
 	UIA_CalendarControlTypeId    = 50001
