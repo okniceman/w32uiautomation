@@ -83,6 +83,7 @@ func structureChangedEventHandler_release(this *ole.IUnknown) int32 {
 }
 
 func NewStructureChangedEventHandler(handlerFunc func(this *IUIAutomationStructureChangedEventHandler, sender *IUIAutomationElement, changeType StructureChangeType, runtimeId *ole.SAFEARRAY) syscall.Handle) IUIAutomationStructureChangedEventHandler {
+
 	lpVtbl := &IUIAutomationStructureChangedEventHandlerVtbl{
 		IUnknownVtbl: ole.IUnknownVtbl{
 			QueryInterface: syscall.NewCallback(structureChangedEventHandler_queryInterface),
@@ -91,6 +92,7 @@ func NewStructureChangedEventHandler(handlerFunc func(this *IUIAutomationStructu
 		},
 		HandleStructureChangedEvent: syscall.NewCallback(handlerFunc),
 	}
+
 	return IUIAutomationStructureChangedEventHandler{
 		IUnknown: ole.IUnknown{RawVTable: (*interface{})(unsafe.Pointer(lpVtbl))},
 	}

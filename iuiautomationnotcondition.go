@@ -6,20 +6,19 @@ import (
 	"github.com/go-ole/go-ole"
 )
 
-type IUIAutomationBoolCondition struct {
+type IUIAutomationNotCondition struct {
 	ole.IUnknown
 }
 
-type IUIAutomationBoolConditionVtbl struct {
+type IUIAutomationNotConditionVtbl struct {
 	ole.IUnknownVtbl
-	Get_BooleanValue uintptr
+	GetChild uintptr
 }
 
-func (and *IUIAutomationBoolCondition) VTable() *IUIAutomationBoolConditionVtbl {
-	return (*IUIAutomationBoolConditionVtbl)(unsafe.Pointer(and.RawVTable))
+func (and *IUIAutomationNotCondition) VTable() *IUIAutomationNotConditionVtbl {
+	return (*IUIAutomationNotConditionVtbl)(unsafe.Pointer(and.RawVTable))
 }
 
-// IID为1b4e1f2e-75eb-4d0b-8952-5a69988e2307
-var IID_IUIAutomationBoolCondition = &ole.GUID{0x1b4e1f2e, 0x75eb, 0x4d0b, [8]byte{0x89, 0x52, 0x5a, 0x69, 0x98,
-	0x8e, 0x23, 0x07}}
-
+// IID为f528b657-847b-498c-8896-d52b565407a1
+var IID_IUIAutomationNotCondition = &ole.GUID{0xf528b657, 0x847b, 0x498c, [8]byte{0x88, 0x96, 0xd5, 0x2b, 0x56,
+	0x54, 0x07, 0xa1}}

@@ -17,7 +17,9 @@ type IUIAutomationFocusChangedEventHandlerVtbl struct {
 	HandleFocusChangedEvent uintptr
 }
 
-var IID_IUIAutomationFocusChangedEventHandler = &ole.GUID{}
+// IID为c270f6b5-5c69-4290-9745-7a7f97169468
+var IID_IUIAutomationFocusChangedEventHandler = &ole.GUID{0xc270f6b5, 0x5c69, 0x4290, [8]byte{0x97, 0x45, 0x7a, 0x7f, 0x97,
+	0x16, 0x94, 0x68}}
 
 func (fceh *IUIAutomationFocusChangedEventHandler) VTable() *IUIAutomationFocusChangedEventHandlerVtbl {
 	return (*IUIAutomationFocusChangedEventHandlerVtbl)(unsafe.Pointer(fceh.RawVTable))

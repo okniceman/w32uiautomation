@@ -68,12 +68,6 @@ type IUIAutomationVtbl struct {
 	Get_ReservedMixedAttributeValue           uintptr
 	ElementFromIAccessible                    uintptr
 	ElementFromIAccessibleBuildCache          uintptr
-	Get_AutoSetFocus                          uintptr
-	Get_ConnectionTimeout                     uintptr
-	Get_TransactionTimeout                    uintptr
-	Put_AutoSetFocus                          uintptr
-	Put_ConnectionTimeout                     uintptr
-	Put_TransactionTimeout                    uintptr
 }
 
 var CLSID_CUIAutomation = &ole.GUID{0xff48dba4, 0x60ef, 0x4201, [8]byte{0xaa, 0x87, 0x54, 0x10, 0x3e, 0xef, 0x59, 0x4e}}
@@ -84,6 +78,11 @@ func (auto *IUIAutomation) VTable() *IUIAutomationVtbl {
 	return (*IUIAutomationVtbl)(unsafe.Pointer(auto.RawVTable))
 }
 
+// NewUIAutomation
+//
+//	@Description: UIAutomation构造函数
+//	@return *IUIAutomation
+//	@return error
 func NewUIAutomation() (*IUIAutomation, error) {
 	auto, err := ole.CreateInstance(CLSID_CUIAutomation, IID_IUIAutomation)
 	if err != nil {
@@ -168,44 +167,6 @@ func (auto *IUIAutomation) ElementFromHandle(hwnd syscall.Handle) (el *IUIAutoma
 //	@return err
 func (auto *IUIAutomation) GetFocusedElement() (el *IUIAutomationElement, err error) {
 	return getFocusedElement(auto)
-}
-
-// GetAutoSetFocus
-//
-//	@Description: Specifies whether calls to UI Automation control pattern methods automatically set focus to the target element.
-//	@receiver auto2
-//	@return b
-//	@return err
-func (auto *IUIAutomation) GetAutoSetFocus() (b bool, err error) {
-	return getAutoSetFocus(auto)
-}
-
-// PutAutoSetFocus
-//
-//	@Description: Specifies whether calls to UI Automation control pattern methods automatically set focus to the target element.
-//	@receiver auto
-//	@param b
-//	@return err
-func (auto *IUIAutomation) PutAutoSetFocus(b bool) (err error) {
-	return putAutoSetFocus(auto, &b)
-}
-
-func putAutoSetFocus(auto *IUIAutomation, b *bool) (err error) {
-	hr, _, _ := syscall.SyscallN(auto.VTable().Put_AutoSetFocus, uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(b)))
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
-}
-
-func getAutoSetFocus(auto *IUIAutomation) (b bool, err error) {
-	hr, _, _ := syscall.SyscallN(auto.VTable().Get_AutoSetFocus, uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(&b)))
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
 }
 
 func createCacheRequest(auto *IUIAutomation) (cacheRequest *IUIAutomationCacheRequest, err error) {

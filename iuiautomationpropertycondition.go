@@ -6,20 +6,21 @@ import (
 	"github.com/go-ole/go-ole"
 )
 
-type IUIAutomationBoolCondition struct {
+type IUIAutomationPropertyCondition struct {
 	ole.IUnknown
 }
 
-type IUIAutomationBoolConditionVtbl struct {
+type IUIAutomationPropertyConditionVtbl struct {
 	ole.IUnknownVtbl
-	Get_BooleanValue uintptr
+	Get_PropertyConditionFlags uintptr
+	Get_PropertyId             uintptr
+	Get_PropertyValue          uintptr
 }
 
-func (and *IUIAutomationBoolCondition) VTable() *IUIAutomationBoolConditionVtbl {
-	return (*IUIAutomationBoolConditionVtbl)(unsafe.Pointer(and.RawVTable))
+func (and *IUIAutomationPropertyCondition) VTable() *IUIAutomationPropertyConditionVtbl {
+	return (*IUIAutomationPropertyConditionVtbl)(unsafe.Pointer(and.RawVTable))
 }
 
-// IID为1b4e1f2e-75eb-4d0b-8952-5a69988e2307
-var IID_IUIAutomationBoolCondition = &ole.GUID{0x1b4e1f2e, 0x75eb, 0x4d0b, [8]byte{0x89, 0x52, 0x5a, 0x69, 0x98,
-	0x8e, 0x23, 0x07}}
-
+// IID为99ebf2cb-5578-4267-9ad4-afd6ea77e94b
+var IID_IUIAutomationPropertyCondition = &ole.GUID{0x99ebf2cb, 0x5578, 0x4267, [8]byte{0x9a, 0xd4, 0xaf, 0xd6, 0xea,
+	0x77, 0xe9, 0x4b}}

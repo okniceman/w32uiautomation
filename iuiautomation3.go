@@ -2,5 +2,16 @@ package w32uiautomation
 
 import "github.com/go-ole/go-ole"
 
-// IID为34723aff-0c9d-49d0-9896-7ab52df8cd8a
-var IID_IUIAutomation2 = &ole.GUID{0x30cbe57d, 0xd9d0, 0x452a, [8]byte{0xab, 0x13, 0x7a, 0xc5, 0xac, 0x48, 0x25, 0xee}}
+type IUIAutomation3 struct {
+	ole.IUnknown
+	auto2 *IUIAutomation2
+}
+
+type IUIAutomation3Vtbl struct {
+	ole.IUnknownVtbl
+	AddTextEditTextChangedEventHandler    uintptr
+	RemoveTextEditTextChangedEventHandler uintptr
+}
+
+// IID为73D768DA-9B51-4B89-936E-C209290973E7
+var IID_IUIAutomation3 = &ole.GUID{0x73D768DA, 0x9B51, 0x4B89, [8]byte{0x93, 0x6E, 0xC2, 0x09, 0x29, 0x09, 0x73, 0xE7}}
