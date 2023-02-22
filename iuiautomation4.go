@@ -1,7 +1,38 @@
 package w32uiautomation
 
-import "github.com/go-ole/go-ole"
+import (
+	"unsafe"
+
+	"github.com/go-ole/go-ole"
+)
+
+type IUIAutomation4 struct {
+	ole.IUnknown
+	*IUIAutomation3
+}
+
+type IUIAutomation4Vtbl struct {
+	ole.IUnknownVtbl
+}
 
 // IID为1189C02A-05F8-4319-8E21-E817E3DB2860
-var IID_IUIAutomation4 = &ole.GUID{0x30cbe57d, 0xd9d0, 0x452a, [8]byte{0xab, 0x13, 0x7a, 0xc5, 0xac, 0x48, 0x25, 0xee}}
+var IID_IUIAutomation4 = ole.NewGUID("1189C02A-05F8-4319-8E21-E817E3DB2860")
 
+func NewUIAutomation4() (*IUIAutomation4, error) {
+	result, err := ole.CreateInstance(CLSID_CUIAutomation8, IID_IUIAutomation4)
+	if err != nil {
+		return nil, err
+	}
+
+	auto4 := (*IUIAutomation4)(unsafe.Pointer(result))
+
+	auto4.IUIAutomation3, err = NewUIAutomation3()
+	if err != nil {
+		return nil, err
+	}
+	return auto4, nil
+}
+
+func (auto4 *IUIAutomation4) VTable() *IUIAutomation4Vtbl {
+	return (*IUIAutomation4Vtbl)(unsafe.Pointer(auto4.RawVTable))
+}

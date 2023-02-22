@@ -13,5 +13,4 @@ type IUIAutomationElement4Vtbl struct {
 }
 
 // IID为3B6E233C-52FB-4063-A4C9-77C075C2A06B
-var IID_IUIAutomationElement4 = &ole.GUID{0xd22108aa, 0x8ac5, 0x49a5, [8]byte{0x83, 0x7b, 0x37, 0xbb, 0xb3, 0xd7,
-	0x59, 0x1e}}
+var IID_IUIAutomationElement4 = ole.NewGUID("3B6E233C-52FB-4063-A4C9-77C075C2A06B")

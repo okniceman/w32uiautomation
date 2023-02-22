@@ -9,7 +9,7 @@ import (
 
 type IUIAutomation2 struct {
 	ole.IUnknown
-	auto *IUIAutomation
+	*IUIAutomation
 }
 
 type IUIAutomation2Vtbl struct {
@@ -23,11 +23,10 @@ type IUIAutomation2Vtbl struct {
 }
 
 // IID为34723aff-0c9d-49d0-9896-7ab52df8cd8a
-var IID_IUIAutomation2 = &ole.GUID{0x34723aff, 0x0c9d, 0x49d0, [8]byte{0x98, 0x96, 0x7a, 0xb5, 0x2d, 0xf8, 0xcd, 0x8a}}
+var IID_IUIAutomation2 = ole.NewGUID("34723aff-0c9d-49d0-9896-7ab52df8cd8a")
 
-func (auto *IUIAutomation2) VTable() *IUIAutomation2Vtbl {
-	return (*IUIAutomation2Vtbl)(unsafe.Pointer(auto.RawVTable))
-}
+// CUIAutomation8为e22ad333-b25f-460c-83d0-0581107395c9,win8之后的版本使用此字段
+var CLSID_CUIAutomation8 = ole.NewGUID("e22ad333-b25f-460c-83d0-0581107395c9")
 
 // NewUIAutomation2
 //
@@ -35,19 +34,22 @@ func (auto *IUIAutomation2) VTable() *IUIAutomation2Vtbl {
 //	@return *IUIAutomation2
 //	@return error
 func NewUIAutomation2() (*IUIAutomation2, error) {
-	result, err := ole.CreateInstance(CLSID_CUIAutomation, IID_IUIAutomation2)
+	result, err := ole.CreateInstance(CLSID_CUIAutomation8, IID_IUIAutomation2)
 	if err != nil {
 		return nil, err
 	}
 
 	auto2 := (*IUIAutomation2)(unsafe.Pointer(result))
-	auto2.auto, err = NewUIAutomation()
+	auto2.IUIAutomation, err = NewUIAutomation()
 
 	if err != nil {
 		return nil, err
 	}
-
 	return auto2, nil
+}
+
+func (auto2 *IUIAutomation2) VTable() *IUIAutomation2Vtbl {
+	return (*IUIAutomation2Vtbl)(unsafe.Pointer(auto2.RawVTable))
 }
 
 // GetAutoSetFocus
