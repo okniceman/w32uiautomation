@@ -7,12 +7,13 @@ import (
 )
 
 type IUIAutomation5 struct {
-	ole.IUnknown
 	*IUIAutomation4
 }
 
 type IUIAutomation5Vtbl struct {
-	ole.IUnknownVtbl
+	*IUIAutomation4Vtbl
+	AddNotificationEventHandler    uintptr
+	RemoveNotificationEventHandler uintptr
 }
 
 // IID为25F700C8-D816-4057-A9DC-3CBDEE77E256
@@ -34,5 +35,6 @@ func NewUIAutomation5() (*IUIAutomation5, error) {
 }
 
 func (auto5 *IUIAutomation5) VTable() *IUIAutomation5Vtbl {
-	return (*IUIAutomation5Vtbl)(unsafe.Pointer(auto5.RawVTable))
+	// return (*IUIAutomation5Vtbl)(unsafe.Pointer(auto5.RawVTable))
+	return nil
 }

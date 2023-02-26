@@ -5,14 +5,8 @@ import (
 	"unsafe"
 
 	"github.com/go-ole/go-ole"
+	"github.com/gonutz/w32/v2"
 )
-
-type RECT struct {
-	Left   uint32
-	Top    uint32
-	Right  uint32
-	Bottom uint32
-}
 
 type IUIAutomationElement struct {
 	ole.IUnknown
@@ -138,7 +132,7 @@ func (elem *IUIAutomationElement) Get_CurrentNativeWindowHandle() (syscall.Handl
 	return get_CurrentNativeWindowHandle(elem)
 }
 
-func (elem *IUIAutomationElement) Get_CurrentBoundingRectangle() (RECT, error) {
+func (elem *IUIAutomationElement) Get_CurrentBoundingRectangle() (w32.RECT, error) {
 	return get_CurrentBoundingRectangle(elem)
 }
 
@@ -202,6 +196,7 @@ func get_CurrentAutomationId(elem *IUIAutomationElement) (id string, err error) 
 		err = ole.NewError(hr)
 		return
 	}
+
 	id = ole.BstrToString(bstrAutomationId)
 	return
 }
@@ -252,13 +247,11 @@ func get_CurrentNativeWindowHandle(elem *IUIAutomationElement) (handle syscall.H
 	return
 }
 
-func get_CurrentBoundingRectangle(elem *IUIAutomationElement) (rect RECT, err error) {
-	hr, _, _ := syscall.Syscall(
+func get_CurrentBoundingRectangle(elem *IUIAutomationElement) (rect w32.RECT, err error) {
+	hr, _, _ := syscall.SyscallN(
 		elem.VTable().Get_CurrentBoundingRectangle,
-		2,
 		uintptr(unsafe.Pointer(elem)),
-		uintptr(unsafe.Pointer(&rect)),
-		0)
+		uintptr(unsafe.Pointer(&rect)))
 	if hr != 0 {
 		err = ole.NewError(hr)
 		return

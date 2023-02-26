@@ -7,12 +7,11 @@ import (
 )
 
 type IUIAutomation3 struct {
-	ole.IUnknown
 	*IUIAutomation2
 }
 
 type IUIAutomation3Vtbl struct {
-	ole.IUnknownVtbl
+	*IUIAutomation2Vtbl
 	AddTextEditTextChangedEventHandler    uintptr
 	RemoveTextEditTextChangedEventHandler uintptr
 }
@@ -36,5 +35,6 @@ func NewUIAutomation3() (*IUIAutomation3, error) {
 }
 
 func (auto3 *IUIAutomation3) VTable() *IUIAutomation3Vtbl {
-	return (*IUIAutomation3Vtbl)(unsafe.Pointer(auto3.RawVTable))
+	// return (*IUIAutomation3Vtbl)(unsafe.Pointer(auto3.RawVTable))
+	return nil
 }

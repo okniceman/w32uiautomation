@@ -7,12 +7,20 @@ import (
 )
 
 type IUIAutomation6 struct {
-	ole.IUnknown
 	*IUIAutomation5
 }
 
 type IUIAutomation6Vtbl struct {
-	ole.IUnknownVtbl
+	*IUIAutomation5Vtbl
+	AddActiveTextPositionChangedEventHandler    uintptr
+	AddEventHandlerGroup                        uintptr
+	CreateEventHandlerGroup                     uintptr
+	Get_CoalesceEvents                          uintptr
+	Get_ConnectionRecoveryBehavior              uintptr
+	Put_CoalesceEvents                          uintptr
+	Put_ConnectionRecoveryBehavior              uintptr
+	RemoveActiveTextPositionChangedEventHandler uintptr
+	RemoveEventHandlerGroup                     uintptr
 }
 
 // IID为AAE072DA-29E3-413D-87A7-192DBF81ED10
@@ -30,10 +38,10 @@ func NewUIAutomation6() (*IUIAutomation6, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return auto6, nil
 }
 
 func (auto6 *IUIAutomation6) VTable() *IUIAutomation6Vtbl {
-	return (*IUIAutomation6Vtbl)(unsafe.Pointer(auto6.RawVTable))
+	// return (*IUIAutomation6Vtbl)(unsafe.Pointer(auto6.RawVTable))
+	return nil
 }

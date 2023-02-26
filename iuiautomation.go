@@ -84,11 +84,13 @@ func (auto *IUIAutomation) VTable() *IUIAutomationVtbl {
 //	@return *IUIAutomation
 //	@return error
 func NewUIAutomation() (*IUIAutomation, error) {
-	auto, err := ole.CreateInstance(CLSID_CUIAutomation, IID_IUIAutomation)
+
+	instance, err := ole.CreateInstance(CLSID_CUIAutomation, IID_IUIAutomation)
 	if err != nil {
 		return nil, err
 	}
-	return (*IUIAutomation)(unsafe.Pointer(auto)), nil
+
+	return (*IUIAutomation)(unsafe.Pointer(instance)), nil
 }
 
 func (auto *IUIAutomation) CompareElements(el1, el2 *IUIAutomation) (areSame bool, err error) {
@@ -188,7 +190,9 @@ func getFocusedElement(auto *IUIAutomation) (el *IUIAutomationElement, err error
 }
 
 func elementFromHandle(auto *IUIAutomation, hwnd syscall.Handle) (el *IUIAutomationElement, err error) {
-	hr, _, _ := syscall.SyscallN(auto.VTable().ElementFromHandle, uintptr(unsafe.Pointer(auto)), uintptr(unsafe.Pointer(hwnd)), uintptr(unsafe.Pointer(&el)))
+
+	hr, _, _ := syscall.SyscallN(auto.VTable().ElementFromHandle, uintptr(unsafe.Pointer(auto)),
+		uintptr(unsafe.Pointer(hwnd)), uintptr(unsafe.Pointer(&el)))
 	if hr != 0 {
 		err = ole.NewError(hr)
 	}
@@ -196,7 +200,8 @@ func elementFromHandle(auto *IUIAutomation, hwnd syscall.Handle) (el *IUIAutomat
 }
 
 func elementFromPoint(auto *IUIAutomation, point *ole.Point) (el *IUIAutomationElement, err error) {
-	hr, _, _ := syscall.SyscallN(auto.VTable().ElementFromPoint, uintptr(unsafe.Pointer(auto)), uintptr(unsafe.Pointer(point)), uintptr(unsafe.Pointer(&el)))
+	hr, _, _ := syscall.SyscallN(auto.VTable().ElementFromPoint, uintptr(unsafe.Pointer(auto)),
+		uintptr(unsafe.Pointer(point)), uintptr(unsafe.Pointer(&el)))
 	if hr != 0 {
 		err = ole.NewError(hr)
 	}
@@ -204,15 +209,12 @@ func elementFromPoint(auto *IUIAutomation, point *ole.Point) (el *IUIAutomationE
 }
 
 func compareElements(auto *IUIAutomation, el1, el2 *IUIAutomation) (areSame bool, err error) {
-	hr, _, _ := syscall.Syscall6(
+	hr, _, _ := syscall.SyscallN(
 		auto.VTable().CompareElements,
-		4,
 		uintptr(unsafe.Pointer(auto)),
 		uintptr(unsafe.Pointer(el1)),
 		uintptr(unsafe.Pointer(el2)),
-		uintptr(unsafe.Pointer(&areSame)),
-		0,
-		0)
+		uintptr(unsafe.Pointer(&areSame)))
 	if hr != 0 {
 		err = ole.NewError(hr)
 	}
@@ -231,9 +233,8 @@ func getRootElement(auto *IUIAutomation) (root *IUIAutomationElement, err error)
 }
 
 func createTreeWalker(auto *IUIAutomation, condition *IUIAutomationCondition) (walker *IUIAutomationTreeWalker, err error) {
-	hr, _, _ := syscall.Syscall(
+	hr, _, _ := syscall.SyscallN(
 		auto.VTable().CreateTreeWalker,
-		3,
 		uintptr(unsafe.Pointer(auto)),
 		uintptr(unsafe.Pointer(condition)),
 		uintptr(unsafe.Pointer(&walker)))
@@ -244,12 +245,10 @@ func createTreeWalker(auto *IUIAutomation, condition *IUIAutomationCondition) (w
 }
 
 func createTrueCondition(auto *IUIAutomation) (newCondition *IUIAutomationCondition, err error) {
-	hr, _, _ := syscall.Syscall(
+	hr, _, _ := syscall.SyscallN(
 		auto.VTable().CreateTrueCondition,
-		2,
 		uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(&newCondition)),
-		0)
+		uintptr(unsafe.Pointer(&newCondition)))
 	if hr != 0 {
 		err = ole.NewError(hr)
 	}
@@ -257,15 +256,12 @@ func createTrueCondition(auto *IUIAutomation) (newCondition *IUIAutomationCondit
 }
 
 func createAndCondition(auto *IUIAutomation, condition1, condition2 *IUIAutomationCondition) (newCondition *IUIAutomationCondition, err error) {
-	hr, _, _ := syscall.Syscall6(
+	hr, _, _ := syscall.SyscallN(
 		auto.VTable().CreateAndCondition,
-		4,
 		uintptr(unsafe.Pointer(auto)),
 		uintptr(unsafe.Pointer(condition1)),
 		uintptr(unsafe.Pointer(condition2)),
-		uintptr(unsafe.Pointer(&newCondition)),
-		0,
-		0)
+		uintptr(unsafe.Pointer(&newCondition)))
 	if hr != 0 {
 		err = ole.NewError(hr)
 	}
@@ -273,15 +269,13 @@ func createAndCondition(auto *IUIAutomation, condition1, condition2 *IUIAutomati
 }
 
 func addStructureChangedEventHandler(auto *IUIAutomation, element *IUIAutomationElement, scope TreeScope, cacheRequest *IUIAutomationCacheRequest, handler *IUIAutomationStructureChangedEventHandler) error {
-	hr, _, _ := syscall.Syscall6(
+	hr, _, _ := syscall.SyscallN(
 		auto.VTable().AddStructureChangedEventHandler,
-		5,
 		uintptr(unsafe.Pointer(auto)),
 		uintptr(unsafe.Pointer(element)),
 		uintptr(scope),
 		uintptr(unsafe.Pointer(cacheRequest)),
-		uintptr(unsafe.Pointer(handler)),
-		0)
+		uintptr(unsafe.Pointer(handler)))
 	if hr != 0 {
 		return ole.NewError(hr)
 	}
@@ -289,9 +283,8 @@ func addStructureChangedEventHandler(auto *IUIAutomation, element *IUIAutomation
 }
 
 func removeStructureChangedEventHandler(auto *IUIAutomation, element *IUIAutomationElement, handler *IUIAutomationStructureChangedEventHandler) error {
-	hr, _, _ := syscall.Syscall(
+	hr, _, _ := syscall.SyscallN(
 		auto.VTable().RemoveStructureChangedEventHandler,
-		3,
 		uintptr(unsafe.Pointer(auto)),
 		uintptr(unsafe.Pointer(element)),
 		uintptr(unsafe.Pointer(handler)))
@@ -302,12 +295,9 @@ func removeStructureChangedEventHandler(auto *IUIAutomation, element *IUIAutomat
 }
 
 func removeAllEventHandlers(auto *IUIAutomation) error {
-	hr, _, _ := syscall.Syscall(
+	hr, _, _ := syscall.SyscallN(
 		auto.VTable().RemoveAllEventHandlers,
-		1,
-		uintptr(unsafe.Pointer(auto)),
-		0,
-		0)
+		uintptr(unsafe.Pointer(auto)))
 	if hr != 0 {
 		return ole.NewError(hr)
 	}

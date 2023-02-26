@@ -5,7 +5,7 @@ import (
 )
 
 type IUIAutomationElement5 struct {
-	ole.IUnknown
+	IUIAutomationElement4
 }
 
 type IUIAutomationElement5Vtbl struct {
