@@ -108,6 +108,11 @@ func (elem *IUIAutomationElement) SetFocus() (err error) {
 	return setFocus(elem)
 }
 
+func (elem *IUIAutomationElement) GetRuntimeId() (runtimeId []interface{}, err error) {
+
+	return getRuntimeId(elem)
+}
+
 func (elem *IUIAutomationElement) FindFirst(scope TreeScope, condition *IUIAutomationCondition) (found *IUIAutomationElement, err error) {
 	return findFirst(elem, scope, condition)
 }
@@ -141,15 +146,30 @@ func (elem *IUIAutomationElement) Get_CurrentPropertyValue(propertyId PROPERTYID
 }
 
 func setFocus(elem *IUIAutomationElement) (err error) {
-	hr, _, _ := syscall.Syscall(
+	hr, _, _ := syscall.SyscallN(
 		elem.VTable().SetFocus,
-		1,
-		uintptr(unsafe.Pointer(elem)),
-		0,
-		0)
+		uintptr(unsafe.Pointer(elem)))
 	if hr != 0 {
 		err = ole.NewError(hr)
-		return
+	}
+	return
+}
+
+func getRuntimeId(elem *IUIAutomationElement) (runtimeId []interface{}, err error) {
+
+	var r *ole.SafeArray
+
+	hr, _, _ := syscall.SyscallN(elem.VTable().GetRuntimeId, uintptr(unsafe.Pointer(elem)),
+		uintptr(unsafe.Pointer(&r)))
+
+	saConvert := &ole.SafeArrayConversion{
+		Array: r,
+	}
+
+	runtimeId = saConvert.ToValueArray()
+
+	if hr != 0 {
+		err = ole.NewError(hr)
 	}
 	return
 }
@@ -179,19 +199,16 @@ func getCurrentPattern(elem *IUIAutomationElement, patternId PATTERNID) (pattern
 		uintptr(unsafe.Pointer(&pattern)))
 	if hr != 0 {
 		err = ole.NewError(hr)
-		return
 	}
 	return
 }
 
 func get_CurrentAutomationId(elem *IUIAutomationElement) (id string, err error) {
 	var bstrAutomationId *uint16
-	hr, _, _ := syscall.Syscall(
+	hr, _, _ := syscall.SyscallN(
 		elem.VTable().Get_CurrentAutomationId,
-		2,
 		uintptr(unsafe.Pointer(elem)),
-		uintptr(unsafe.Pointer(&bstrAutomationId)),
-		0)
+		uintptr(unsafe.Pointer(&bstrAutomationId)))
 	if hr != 0 {
 		err = ole.NewError(hr)
 		return
@@ -219,12 +236,10 @@ func get_CurrentClassName(elem *IUIAutomationElement) (name string, err error) {
 
 func get_CurrentName(elem *IUIAutomationElement) (name string, err error) {
 	var bstrName *uint16
-	hr, _, _ := syscall.Syscall(
+	hr, _, _ := syscall.SyscallN(
 		elem.VTable().Get_CurrentName,
-		2,
 		uintptr(unsafe.Pointer(elem)),
-		uintptr(unsafe.Pointer(&bstrName)),
-		0)
+		uintptr(unsafe.Pointer(&bstrName)))
 	if hr != 0 {
 		err = ole.NewError(hr)
 		return
@@ -234,12 +249,10 @@ func get_CurrentName(elem *IUIAutomationElement) (name string, err error) {
 }
 
 func get_CurrentNativeWindowHandle(elem *IUIAutomationElement) (handle syscall.Handle, err error) {
-	hr, _, _ := syscall.Syscall(
+	hr, _, _ := syscall.SyscallN(
 		elem.VTable().Get_CurrentNativeWindowHandle,
-		2,
 		uintptr(unsafe.Pointer(elem)),
-		uintptr(unsafe.Pointer(&handle)),
-		0)
+		uintptr(unsafe.Pointer(&handle)))
 	if hr != 0 {
 		err = ole.NewError(hr)
 		return

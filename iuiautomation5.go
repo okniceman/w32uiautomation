@@ -7,11 +7,11 @@ import (
 )
 
 type IUIAutomation5 struct {
-	*IUIAutomation4
+	IUIAutomation4
 }
 
 type IUIAutomation5Vtbl struct {
-	*IUIAutomation4Vtbl
+	IUIAutomation4Vtbl
 	AddNotificationEventHandler    uintptr
 	RemoveNotificationEventHandler uintptr
 }
@@ -25,16 +25,10 @@ func NewUIAutomation5() (*IUIAutomation5, error) {
 		return nil, err
 	}
 
-	auto5 := (*IUIAutomation5)(unsafe.Pointer(result))
-
-	auto5.IUIAutomation4, err = NewUIAutomation4()
-	if err != nil {
-		return nil, err
-	}
-	return auto5, nil
+	return (*IUIAutomation5)(unsafe.Pointer(result)), nil
 }
 
 func (auto5 *IUIAutomation5) VTable() *IUIAutomation5Vtbl {
-	// return (*IUIAutomation5Vtbl)(unsafe.Pointer(auto5.RawVTable))
-	return nil
+	return (*IUIAutomation5Vtbl)(unsafe.Pointer(auto5.RawVTable))
+
 }

@@ -5,11 +5,11 @@ import (
 )
 
 type IUIAutomationElement7 struct {
-	ole.IUnknown
+	IUIAutomationElement6
 }
 
 type IUIAutomationElement7Vtbl struct {
-	ole.IUnknownVtbl
+	IUIAutomationElement6Vtbl
 }
 
 // IID为204e8572-cfc3-4c11-b0c8-7da7420750b7

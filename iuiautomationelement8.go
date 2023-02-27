@@ -5,11 +5,13 @@ import (
 )
 
 type IUIAutomationElement8 struct {
-	ole.IUnknown
+	IUIAutomationElement7
 }
 
 type IUIAutomationElement8Vtbl struct {
-	ole.IUnknownVtbl
+	IUIAutomationElement7Vtbl
+	Get_CachedHeadingLevel  uintptr
+	Get_CurrentHeadingLevel uintptr
 }
 
 // IID为8C60217D-5411-4CDE-BCC0-1CEDA223830C

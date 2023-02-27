@@ -9,7 +9,7 @@ type IUIAutomationElement5 struct {
 }
 
 type IUIAutomationElement5Vtbl struct {
-	ole.IUnknownVtbl
+	IUIAutomationElement4Vtbl
 }
 
 // IID为98141C1D-0D0E-4175-BBE2-6BFF455842A7

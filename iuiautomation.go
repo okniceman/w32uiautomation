@@ -171,6 +171,51 @@ func (auto *IUIAutomation) GetFocusedElement() (el *IUIAutomationElement, err er
 	return getFocusedElement(auto)
 }
 
+func (auto *IUIAutomation) GetPropertyProgrammaticName(propertyid PROPERTYID) (name string, err error) {
+	return getPropertyProgrammaticName(auto, propertyid)
+}
+
+func (auto *IUIAutomation) GetPatternProgrammaticName(patternid PATTERNID) (name string, err error) {
+	return getPatternProgrammaticName(auto, patternid)
+}
+
+func (auto *IUIAutomation) GetProxyFactoryMapping() (factoryMapping *IUIAutomationProxyFactoryMapping, err error) {
+	return getProxyFactoryMapping(auto)
+}
+
+func getProxyFactoryMapping(auto *IUIAutomation) (factoryMapping *IUIAutomationProxyFactoryMapping, err error) {
+	hr, _, _ := syscall.SyscallN(auto.VTable().Get_ProxyFactoryMapping, uintptr(unsafe.Pointer(auto)),
+		uintptr(unsafe.Pointer(&factoryMapping)))
+	if hr != 0 {
+		err = ole.NewError(hr)
+	}
+	return
+}
+
+func getPatternProgrammaticName(auto *IUIAutomation, patternid PATTERNID) (name string, err error) {
+	var n *uint16
+	hr, _, _ := syscall.SyscallN(auto.VTable().GetPatternProgrammaticName, uintptr(unsafe.Pointer(auto)),
+		uintptr(patternid), uintptr(unsafe.Pointer(&n)))
+	name = ole.BstrToString(n)
+	if hr != 0 {
+		err = ole.NewError(hr)
+	}
+	return
+}
+
+func getPropertyProgrammaticName(auto *IUIAutomation, propertyid PROPERTYID) (name string, err error) {
+
+	var n *uint16
+	hr, _, _ := syscall.SyscallN(auto.VTable().GetPropertyProgrammaticName, uintptr(unsafe.Pointer(auto)),
+		uintptr(propertyid),
+		uintptr(unsafe.Pointer(&n)))
+	name = ole.BstrToString(n)
+	if hr != 0 {
+		err = ole.NewError(hr)
+	}
+	return
+}
+
 func createCacheRequest(auto *IUIAutomation) (cacheRequest *IUIAutomationCacheRequest, err error) {
 	hr, _, _ := syscall.SyscallN(auto.VTable().CreateCacheRequest, uintptr(unsafe.Pointer(auto)),
 		uintptr(unsafe.Pointer(&cacheRequest)))

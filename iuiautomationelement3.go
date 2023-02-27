@@ -7,11 +7,11 @@ import (
 )
 
 type IUIAutomationElement3 struct {
-	*IUIAutomationElement2
+	IUIAutomationElement2
 }
 
 type IUIAutomationElement3Vtbl struct {
-	*IUIAutomationElement2Vtbl
+	IUIAutomationElement2Vtbl
 	Get_CachedIsPeripheral  uintptr
 	Get_CurrentIsPeripheral uintptr
 	ShowContextMenu         uintptr

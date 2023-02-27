@@ -3,7 +3,11 @@ package w32uiautomation
 type PATTERNID uintptr
 
 const (
-	UIA_AnnotationPatternId        = 10023 // Identifies the Annotation control pattern. Supported starting with Windows 8.
+	UIA_AnnotationPatternId = 10023 // Identifies the Annotation control pattern. Supported starting with Windows 8.
+
+	// 标识 CustomNavigation 控件模式。 支持从Windows 10开始。
+	UIA_CustomNavigationPatternId = 10033
+
 	UIA_DockPatternId              = 10011 // Identifies the Dock control pattern.
 	UIA_DragPatternId              = 10030 // Identifies the Drag control pattern. Supported starting with Windows 8.
 	UIA_DropTargetPatternId        = 10031 // Identifies the DropTarget control pattern. Supported starting with Windows 8.

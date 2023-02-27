@@ -7,7 +7,7 @@ import (
 )
 
 type IUIAutomationElement4 struct {
-	*IUIAutomationElement3
+	IUIAutomationElement3
 }
 
 type IUIAutomationElement4Vtbl struct {
