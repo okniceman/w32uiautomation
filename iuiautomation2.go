@@ -56,7 +56,7 @@ func (auto2 *IUIAutomation2) VTable() *IUIAutomation2Vtbl {
 //	@receiver auto2
 //	@return b
 //	@return err
-func (auto2 *IUIAutomation2) GetAutoSetFocus() (b *w32.BOOL, err error) {
+func (auto2 *IUIAutomation2) GetAutoSetFocus() (b w32.BOOL, err error) {
 	return getAutoSetFocus(auto2)
 }
 
@@ -71,7 +71,7 @@ func (auto2 *IUIAutomation2) PutAutoSetFocus(b w32.BOOL) (err error) {
 	return putAutoSetFocus(auto2, b)
 }
 
-func (auto2 *IUIAutomation2) GetConnectionTimeout() (t *w32.DWORD, err error) {
+func (auto2 *IUIAutomation2) GetConnectionTimeout() (t w32.DWORD, err error) {
 	return getConnectionTimeout(auto2)
 }
 
@@ -92,7 +92,7 @@ func (auto2 *IUIAutomation2) PutConnectionTimeout(t w32.DWORD) (err error) {
 //	@receiver auto2
 //	@return t
 //	@return err
-func (auto2 *IUIAutomation2) GetTransactionTimeout() (t *w32.DWORD, err error) {
+func (auto2 *IUIAutomation2) GetTransactionTimeout() (t w32.DWORD, err error) {
 
 	return getTransactionTimeout(auto2)
 
@@ -110,9 +110,9 @@ func putTransactionTimeout(auto2 *IUIAutomation2, t w32.DWORD) (err error) {
 	return
 }
 
-func getTransactionTimeout(auto2 *IUIAutomation2) (t *w32.DWORD, err error) {
+func getTransactionTimeout(auto2 *IUIAutomation2) (t w32.DWORD, err error) {
 	hr, _, _ := syscall.SyscallN(auto2.VTable().Get_TransactionTimeout, uintptr(unsafe.Pointer(auto2)),
-		uintptr(unsafe.Pointer(&t)))
+		uintptr(t))
 	if hr != 0 {
 		err = ole.NewError(hr)
 	}
@@ -128,10 +128,10 @@ func putConnectionTimeout(auto2 *IUIAutomation2, t w32.DWORD) (err error) {
 	return
 }
 
-func getConnectionTimeout(auto2 *IUIAutomation2) (t *w32.DWORD, err error) {
+func getConnectionTimeout(auto2 *IUIAutomation2) (t w32.DWORD, err error) {
 
 	hr, _, _ := syscall.SyscallN(auto2.VTable().Get_ConnectionTimeout, uintptr(unsafe.Pointer(auto2)),
-		uintptr(unsafe.Pointer(&t)))
+		uintptr(t))
 	if hr != 0 {
 		err = ole.NewError(hr)
 	}
@@ -148,9 +148,9 @@ func putAutoSetFocus(auto2 *IUIAutomation2, b w32.BOOL) (err error) {
 	return
 }
 
-func getAutoSetFocus(auto2 *IUIAutomation2) (b *w32.BOOL, err error) {
+func getAutoSetFocus(auto2 *IUIAutomation2) (b w32.BOOL, err error) {
 	hr, _, _ := syscall.SyscallN(auto2.VTable().Get_AutoSetFocus, uintptr(unsafe.Pointer(auto2)),
-		uintptr(unsafe.Pointer(&b)))
+		uintptr(b))
 	if hr != 0 {
 		err = ole.NewError(hr)
 	}

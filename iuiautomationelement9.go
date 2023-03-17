@@ -25,17 +25,17 @@ func (ele9 *IUIAutomationElement9) VTable() *IUIAutomationElement9Vtbl {
 	return (*IUIAutomationElement9Vtbl)(unsafe.Pointer(ele9.RawVTable))
 }
 
-func (ele9 *IUIAutomationElement9) GetCachedIsDialog() (b *w32.BOOL, err error) {
+func (ele9 *IUIAutomationElement9) GetCachedIsDialog() (b w32.BOOL, err error) {
 	return getCachedIsDialog(ele9)
 }
 
-func (ele9 *IUIAutomationElement9) GetCurrentIsDialog() (b *w32.BOOL, err error) {
+func (ele9 *IUIAutomationElement9) GetCurrentIsDialog() (b w32.BOOL, err error) {
 	return getCurrentIsDialog(ele9)
 }
 
-func getCurrentIsDialog(ele9 *IUIAutomationElement9) (b *w32.BOOL, err error) {
+func getCurrentIsDialog(ele9 *IUIAutomationElement9) (b w32.BOOL, err error) {
 	hr, _, _ := syscall.SyscallN(ele9.VTable().Get_CurrentIsDialog, uintptr(unsafe.Pointer(ele9)),
-		uintptr(unsafe.Pointer(&b)))
+		uintptr(b))
 
 	if hr != 0 {
 		err = ole.NewError(hr)
@@ -43,9 +43,9 @@ func getCurrentIsDialog(ele9 *IUIAutomationElement9) (b *w32.BOOL, err error) {
 	return
 }
 
-func getCachedIsDialog(ele9 *IUIAutomationElement9) (b *w32.BOOL, err error) {
+func getCachedIsDialog(ele9 *IUIAutomationElement9) (b w32.BOOL, err error) {
 
-	hr, _, _ := syscall.SyscallN(ele9.VTable().Get_CachedIsDialog, uintptr(unsafe.Pointer(ele9)), uintptr(unsafe.Pointer(&b)))
+	hr, _, _ := syscall.SyscallN(ele9.VTable().Get_CachedIsDialog, uintptr(unsafe.Pointer(ele9)), uintptr(b))
 
 	if hr != 0 {
 		err = ole.NewError(hr)
