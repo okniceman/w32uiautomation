@@ -70,9 +70,17 @@ type IUIAutomationVtbl struct {
 	ElementFromIAccessibleBuildCache          uintptr
 }
 
-var CLSID_CUIAutomation = &ole.GUID{0xff48dba4, 0x60ef, 0x4201, [8]byte{0xaa, 0x87, 0x54, 0x10, 0x3e, 0xef, 0x59, 0x4e}}
+var CLSID_CUIAutomation = &ole.GUID{
+	Data1: 0xff48dba4, 
+	Data2: 0x60ef, 
+	Data3: 0x4201, 
+	Data4: [8]byte{0xaa, 0x87, 0x54, 0x10, 0x3e, 0xef, 0x59, 0x4e}}
 
-var IID_IUIAutomation = &ole.GUID{0x30cbe57d, 0xd9d0, 0x452a, [8]byte{0xab, 0x13, 0x7a, 0xc5, 0xac, 0x48, 0x25, 0xee}}
+var IID_IUIAutomation = &ole.GUID{
+	Data1: 0x30cbe57d, 
+	Data2: 0xd9d0, 
+	Data3: 0x452a, 
+	Data4: [8]byte{0xab, 0x13, 0x7a, 0xc5, 0xac, 0x48, 0x25, 0xee}}
 
 func (auto *IUIAutomation) VTable() *IUIAutomationVtbl {
 	return (*IUIAutomationVtbl)(unsafe.Pointer(auto.RawVTable))
@@ -84,6 +92,8 @@ func (auto *IUIAutomation) VTable() *IUIAutomationVtbl {
 //	@return *IUIAutomation
 //	@return error
 func NewUIAutomation() (*IUIAutomation, error) {
+
+	ole.CoInitialize(0)
 
 	instance, err := ole.CreateInstance(CLSID_CUIAutomation, IID_IUIAutomation)
 	if err != nil {
