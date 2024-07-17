@@ -5,356 +5,309 @@ import (
 	"unsafe"
 
 	"github.com/go-ole/go-ole"
+	"github.com/gonutz/w32/v2"
 )
 
-type IUIAutomation struct {
+type IUIAutomationElement struct {
 	ole.IUnknown
 }
 
-type IUIAutomationVtbl struct {
+type IUIAutomationElementVtbl struct {
 	ole.IUnknownVtbl
-	CompareElements                           uintptr
-	CompareRuntimeIds                         uintptr
-	GetRootElement                            uintptr
-	ElementFromHandle                         uintptr
-	ElementFromPoint                          uintptr
-	GetFocusedElement                         uintptr
-	GetRootElementBuildCache                  uintptr
-	ElementFromHandleBuildCache               uintptr
-	ElementFromPointBuildCache                uintptr
-	GetFocusedElementBuildCache               uintptr
-	CreateTreeWalker                          uintptr
-	Get_ControlViewWalker                     uintptr
-	Get_ContentViewWalker                     uintptr
-	Get_RawViewWalker                         uintptr
-	Get_RawViewCondition                      uintptr
-	Get_ControlViewCondition                  uintptr
-	Get_ContentViewCondition                  uintptr
-	CreateCacheRequest                        uintptr
-	CreateTrueCondition                       uintptr
-	CreateFalseCondition                      uintptr
-	CreatePropertyCondition                   uintptr
-	CreatePropertyConditionEx                 uintptr
-	CreateAndCondition                        uintptr
-	CreateAndConditionFromArray               uintptr
-	CreateAndConditionFromNativeArray         uintptr
-	CreateOrCondition                         uintptr
-	CreateOrConditionFromArray                uintptr
-	CreateOrConditionFromNativeArray          uintptr
-	CreateNotCondition                        uintptr
-	AddAutomationEventHandler                 uintptr
-	RemoveAutomationEventHandler              uintptr
-	AddPropertyChangedEventHandlerNativeArray uintptr
-	AddPropertyChangedEventHandler            uintptr
-	RemovePropertyChangedEventHandler         uintptr
-	AddStructureChangedEventHandler           uintptr
-	RemoveStructureChangedEventHandler        uintptr
-	AddFocusChangedEventHandler               uintptr
-	RemoveFocusChangedEventHandler            uintptr
-	RemoveAllEventHandlers                    uintptr
-	IntNativeArrayToSafeArray                 uintptr
-	IntSafeArrayToNativeArray                 uintptr
-	RectToVariant                             uintptr
-	VariantToRect                             uintptr
-	SafeArrayToRectNativeArray                uintptr
-	CreateProxyFactoryEntry                   uintptr
-	Get_ProxyFactoryMapping                   uintptr
-	GetPropertyProgrammaticName               uintptr
-	GetPatternProgrammaticName                uintptr
-	PollForPotentialSupportedPatterns         uintptr
-	PollForPotentialSupportedProperties       uintptr
-	CheckNotSupported                         uintptr
-	Get_ReservedNotSupportedValue             uintptr
-	Get_ReservedMixedAttributeValue           uintptr
-	ElementFromIAccessible                    uintptr
-	ElementFromIAccessibleBuildCache          uintptr
+	SetFocus                        uintptr
+	GetRuntimeId                    uintptr
+	FindFirst                       uintptr
+	FindAll                         uintptr
+	FindFirstBuildCache             uintptr
+	FindAllBuildCache               uintptr
+	BuildUpdatedCache               uintptr
+	GetCurrentPropertyValue         uintptr
+	GetCurrentPropertyValueEx       uintptr
+	GetCachedPropertyValue          uintptr
+	GetCachedPropertyValueEx        uintptr
+	GetCurrentPatternAs             uintptr
+	GetCachedPatternAs              uintptr
+	GetCurrentPattern               uintptr
+	GetCachedPattern                uintptr
+	GetCachedParent                 uintptr
+	GetCachedChildren               uintptr
+	Get_CurrentProcessId            uintptr
+	Get_CurrentControlType          uintptr
+	Get_CurrentLocalizedControlType uintptr
+	Get_CurrentName                 uintptr
+	Get_CurrentAcceleratorKey       uintptr
+	Get_CurrentAccessKey            uintptr
+	Get_CurrentHasKeyboardFocus     uintptr
+	Get_CurrentIsKeyboardFocusable  uintptr
+	Get_CurrentIsEnabled            uintptr
+	Get_CurrentAutomationId         uintptr
+	Get_CurrentClassName            uintptr
+	Get_CurrentHelpText             uintptr
+	Get_CurrentCulture              uintptr
+	Get_CurrentIsControlElement     uintptr
+	Get_CurrentIsContentElement     uintptr
+	Get_CurrentIsPassword           uintptr
+	Get_CurrentNativeWindowHandle   uintptr
+	Get_CurrentItemType             uintptr
+	Get_CurrentIsOffscreen          uintptr
+	Get_CurrentOrientation          uintptr
+	Get_CurrentFrameworkId          uintptr
+	Get_CurrentIsRequiredForForm    uintptr
+	Get_CurrentItemStatus           uintptr
+	Get_CurrentBoundingRectangle    uintptr
+	Get_CurrentLabeledBy            uintptr
+	Get_CurrentAriaRole             uintptr
+	Get_CurrentAriaProperties       uintptr
+	Get_CurrentIsDataValidForForm   uintptr
+	Get_CurrentControllerFor        uintptr
+	Get_CurrentDescribedBy          uintptr
+	Get_CurrentFlowsTo              uintptr
+	Get_CurrentProviderDescription  uintptr
+	Get_CachedProcessId             uintptr
+	Get_CachedControlType           uintptr
+	Get_CachedLocalizedControlType  uintptr
+	Get_CachedName                  uintptr
+	Get_CachedAcceleratorKey        uintptr
+	Get_CachedAccessKey             uintptr
+	Get_CachedHasKeyboardFocus      uintptr
+	Get_CachedIsKeyboardFocusable   uintptr
+	Get_CachedIsEnabled             uintptr
+	Get_CachedAutomationId          uintptr
+	Get_CachedClassName             uintptr
+	Get_CachedHelpText              uintptr
+	Get_CachedCulture               uintptr
+	Get_CachedIsControlElement      uintptr
+	Get_CachedIsContentElement      uintptr
+	Get_CachedIsPassword            uintptr
+	Get_CachedNativeWindowHandle    uintptr
+	Get_CachedItemType              uintptr
+	Get_CachedIsOffscreen           uintptr
+	Get_CachedOrientation           uintptr
+	Get_CachedFrameworkId           uintptr
+	Get_CachedIsRequiredForForm     uintptr
+	Get_CachedItemStatus            uintptr
+	Get_CachedBoundingRectangle     uintptr
+	Get_CachedLabeledBy             uintptr
+	Get_CachedAriaRole              uintptr
+	Get_CachedAriaProperties        uintptr
+	Get_CachedIsDataValidForForm    uintptr
+	Get_CachedControllerFor         uintptr
+	Get_CachedDescribedBy           uintptr
+	Get_CachedFlowsTo               uintptr
+	Get_CachedProviderDescription   uintptr
+	GetClickablePoint               uintptr
 }
 
-var CLSID_CUIAutomation = &ole.GUID{
-	Data1: 0xff48dba4, 
-	Data2: 0x60ef, 
-	Data3: 0x4201, 
-	Data4: [8]byte{0xaa, 0x87, 0x54, 0x10, 0x3e, 0xef, 0x59, 0x4e}}
+var IID_IUIAutomationElement = &ole.GUID{0xd22108aa, 0x8ac5, 0x49a5, [8]byte{0x83, 0x7b, 0x37, 0xbb, 0xb3, 0xd7, 0x59, 0x1e}}
 
-var IID_IUIAutomation = &ole.GUID{
-	Data1: 0x30cbe57d, 
-	Data2: 0xd9d0, 
-	Data3: 0x452a, 
-	Data4: [8]byte{0xab, 0x13, 0x7a, 0xc5, 0xac, 0x48, 0x25, 0xee}}
-
-func (auto *IUIAutomation) VTable() *IUIAutomationVtbl {
-	return (*IUIAutomationVtbl)(unsafe.Pointer(auto.RawVTable))
+func (elem *IUIAutomationElement) VTable() *IUIAutomationElementVtbl {
+	return (*IUIAutomationElementVtbl)(unsafe.Pointer(elem.RawVTable))
 }
 
-// NewUIAutomation
-//
-//	@Description: UIAutomation构造函数
-//	@return *IUIAutomation
-//	@return error
-func NewUIAutomation() (*IUIAutomation, error) {
-
-	ole.CoInitialize(0)
-
-	instance, err := ole.CreateInstance(CLSID_CUIAutomation, IID_IUIAutomation)
-	if err != nil {
-		return nil, err
-	}
-
-	return (*IUIAutomation)(unsafe.Pointer(instance)), nil
+func (elem *IUIAutomationElement) SetFocus() (err error) {
+	return setFocus(elem)
 }
 
-func (auto *IUIAutomation) CompareElements(el1, el2 *IUIAutomation) (areSame bool, err error) {
-	return compareElements(auto, el1, el2)
+func (elem *IUIAutomationElement) GetRuntimeId() (runtimeId []interface{}, err error) {
+
+	return getRuntimeId(elem)
 }
 
-func (auto *IUIAutomation) GetRootElement() (root *IUIAutomationElement, err error) {
-	return getRootElement(auto)
+func (elem *IUIAutomationElement) FindFirst(scope TreeScope, condition *IUIAutomationCondition) (found *IUIAutomationElement, err error) {
+	return findFirst(elem, scope, condition)
 }
 
-func (auto *IUIAutomation) CreateTreeWalker(condition *IUIAutomationCondition) (walker *IUIAutomationTreeWalker, err error) {
-	return createTreeWalker(auto, condition)
+func (elem *IUIAutomationElement) FindAll(scope TreeScope, condition *IUIAutomationCondition) (found *IUIAutomationElementArray, err error) {
+	return findAll(elem, scope, condition)
 }
 
-func (auto *IUIAutomation) CreateTrueCondition() (condition *IUIAutomationCondition, err error) {
-	return createTrueCondition(auto)
+func (elem *IUIAutomationElement) GetCurrentPattern(patternId PATTERNID) (*ole.IUnknown, error) {
+	return getCurrentPattern(elem, patternId)
 }
 
-func (auto *IUIAutomation) CreateAndCondition(condition1, condition2 *IUIAutomationCondition) (newCondition *IUIAutomationCondition, err error) {
-	return createAndCondition(auto, condition1, condition2)
+func (elem *IUIAutomationElement) Get_CurrentAutomationId() (string, error) {
+	return get_CurrentAutomationId(elem)
 }
 
-func (auto *IUIAutomation) CreatePropertyCondition(propertyId PROPERTYID, value ole.VARIANT) (newCondition *IUIAutomationCondition, err error) {
-	return createPropertyCondition(auto, propertyId, value)
+func (elem *IUIAutomationElement) Get_CurrentCurrentClassName() (string, error) {
+	return get_CurrentClassName(elem)
 }
 
-// CreateCacheRequest
-//
-//	@Description: Creates a cache request.
-//	@receiver auto
-//	@return cacheRequest
-//	@return err
-func (auto *IUIAutomation) CreateCacheRequest() (cacheRequest *IUIAutomationCacheRequest, err error) {
-	return createCacheRequest(auto)
+func (elem *IUIAutomationElement) Get_CurrentName() (string, error) {
+	return get_CurrentName(elem)
 }
 
-func (auto *IUIAutomation) AddStructureChangedEventHandler(element *IUIAutomationElement, scope TreeScope, cacheRequest *IUIAutomationCacheRequest, handler *IUIAutomationStructureChangedEventHandler) error {
-	return addStructureChangedEventHandler(auto, element, scope, cacheRequest, handler)
+func (elem *IUIAutomationElement) Get_CurrentNativeWindowHandle() (syscall.Handle, error) {
+	return get_CurrentNativeWindowHandle(elem)
 }
 
-func (auto *IUIAutomation) RemoveStructureChangedEventHandler(element *IUIAutomationElement, handler *IUIAutomationStructureChangedEventHandler) error {
-	return removeStructureChangedEventHandler(auto, element, handler)
+func (elem *IUIAutomationElement) Get_CurrentBoundingRectangle() (w32.RECT, error) {
+	return get_CurrentBoundingRectangle(elem)
 }
 
-func (auto *IUIAutomation) RemoveAllEventHandlers() error {
-	return removeAllEventHandlers(auto)
+func (elem *IUIAutomationElement) Get_CurrentPropertyValue(propertyId PROPERTYID) (ole.VARIANT, error) {
+	return get_CurrentPropertyValue(elem, propertyId)
 }
 
-// name:Retrieves the UI Automation element at the specified point on the desktop.
-//
-// @description:
-//
-// @param:
-//
-// @return:
-func (auto *IUIAutomation) ElementFromPoint(point *ole.Point) (el *IUIAutomationElement, err error) {
-	return elementFromPoint(auto, point)
-}
-
-// ElementFromHandle
-//
-//	@Description: Retrieves a UI Automation element for the specified window.
-//	@receiver auto
-//	@param hwnd
-//	@return el
-//	@return err
-func (auto *IUIAutomation) ElementFromHandle(hwnd syscall.Handle) (el *IUIAutomationElement, err error) {
-	return elementFromHandle(auto, hwnd)
-}
-
-// GetFocusedElement
-//
-//	@Description: Retrieves the UI Automation element that has the input focus.
-//	@receiver auto
-//	@return el
-//	@return err
-func (auto *IUIAutomation) GetFocusedElement() (el *IUIAutomationElement, err error) {
-	return getFocusedElement(auto)
-}
-
-func (auto *IUIAutomation) GetPropertyProgrammaticName(propertyid PROPERTYID) (name string, err error) {
-	return getPropertyProgrammaticName(auto, propertyid)
-}
-
-func (auto *IUIAutomation) GetPatternProgrammaticName(patternid PATTERNID) (name string, err error) {
-	return getPatternProgrammaticName(auto, patternid)
-}
-
-func (auto *IUIAutomation) GetProxyFactoryMapping() (factoryMapping *IUIAutomationProxyFactoryMapping, err error) {
-	return getProxyFactoryMapping(auto)
-}
-
-func getProxyFactoryMapping(auto *IUIAutomation) (factoryMapping *IUIAutomationProxyFactoryMapping, err error) {
-	hr, _, _ := syscall.SyscallN(auto.VTable().Get_ProxyFactoryMapping, uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(&factoryMapping)))
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
-}
-
-func getPatternProgrammaticName(auto *IUIAutomation, patternid PATTERNID) (name string, err error) {
-	var n *uint16
-	hr, _, _ := syscall.SyscallN(auto.VTable().GetPatternProgrammaticName, uintptr(unsafe.Pointer(auto)),
-		uintptr(patternid), uintptr(unsafe.Pointer(&n)))
-	name = ole.BstrToString(n)
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
-}
-
-func getPropertyProgrammaticName(auto *IUIAutomation, propertyid PROPERTYID) (name string, err error) {
-
-	var n *uint16
-	hr, _, _ := syscall.SyscallN(auto.VTable().GetPropertyProgrammaticName, uintptr(unsafe.Pointer(auto)),
-		uintptr(propertyid),
-		uintptr(unsafe.Pointer(&n)))
-	name = ole.BstrToString(n)
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
-}
-
-func createCacheRequest(auto *IUIAutomation) (cacheRequest *IUIAutomationCacheRequest, err error) {
-	hr, _, _ := syscall.SyscallN(auto.VTable().CreateCacheRequest, uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(&cacheRequest)))
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
-}
-
-func getFocusedElement(auto *IUIAutomation) (el *IUIAutomationElement, err error) {
-
-	hr, _, _ := syscall.SyscallN(auto.VTable().GetFocusedElement, uintptr(unsafe.Pointer(auto)), uintptr(unsafe.Pointer(&el)))
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
-}
-
-func elementFromHandle(auto *IUIAutomation, hwnd syscall.Handle) (el *IUIAutomationElement, err error) {
-
-	hr, _, _ := syscall.SyscallN(auto.VTable().ElementFromHandle, uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(hwnd)), uintptr(unsafe.Pointer(&el)))
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
-}
-
-func elementFromPoint(auto *IUIAutomation, point *ole.Point) (el *IUIAutomationElement, err error) {
-	hr, _, _ := syscall.SyscallN(auto.VTable().ElementFromPoint, uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(point)), uintptr(unsafe.Pointer(&el)))
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
-}
-
-func compareElements(auto *IUIAutomation, el1, el2 *IUIAutomation) (areSame bool, err error) {
+func setFocus(elem *IUIAutomationElement) (err error) {
 	hr, _, _ := syscall.SyscallN(
-		auto.VTable().CompareElements,
-		uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(el1)),
-		uintptr(unsafe.Pointer(el2)),
-		uintptr(unsafe.Pointer(&areSame)))
+		elem.VTable().SetFocus,
+		uintptr(unsafe.Pointer(elem)))
 	if hr != 0 {
 		err = ole.NewError(hr)
 	}
 	return
 }
 
-func getRootElement(auto *IUIAutomation) (root *IUIAutomationElement, err error) {
-	hr, _, _ := syscall.SyscallN(
-		auto.VTable().GetRootElement,
-		uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(&root)))
+func getRuntimeId(elem *IUIAutomationElement) (runtimeId []interface{}, err error) {
+
+	var r *ole.SafeArray
+
+	hr, _, _ := syscall.SyscallN(elem.VTable().GetRuntimeId, uintptr(unsafe.Pointer(elem)),
+		uintptr(unsafe.Pointer(&r)))
+
+	saConvert := &ole.SafeArrayConversion{
+		Array: r,
+	}
+
+	runtimeId = saConvert.ToValueArray()
+
 	if hr != 0 {
 		err = ole.NewError(hr)
 	}
 	return
 }
 
-func createTreeWalker(auto *IUIAutomation, condition *IUIAutomationCondition) (walker *IUIAutomationTreeWalker, err error) {
-	hr, _, _ := syscall.SyscallN(
-		auto.VTable().CreateTreeWalker,
-		uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(condition)),
-		uintptr(unsafe.Pointer(&walker)))
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
-}
-
-func createTrueCondition(auto *IUIAutomation) (newCondition *IUIAutomationCondition, err error) {
-	hr, _, _ := syscall.SyscallN(
-		auto.VTable().CreateTrueCondition,
-		uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(&newCondition)))
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
-}
-
-func createAndCondition(auto *IUIAutomation, condition1, condition2 *IUIAutomationCondition) (newCondition *IUIAutomationCondition, err error) {
-	hr, _, _ := syscall.SyscallN(
-		auto.VTable().CreateAndCondition,
-		uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(condition1)),
-		uintptr(unsafe.Pointer(condition2)),
-		uintptr(unsafe.Pointer(&newCondition)))
-	if hr != 0 {
-		err = ole.NewError(hr)
-	}
-	return
-}
-
-func addStructureChangedEventHandler(auto *IUIAutomation, element *IUIAutomationElement, scope TreeScope, cacheRequest *IUIAutomationCacheRequest, handler *IUIAutomationStructureChangedEventHandler) error {
-	hr, _, _ := syscall.SyscallN(
-		auto.VTable().AddStructureChangedEventHandler,
-		uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(element)),
+func findFirst(elem *IUIAutomationElement, scope TreeScope, condition *IUIAutomationCondition) (found *IUIAutomationElement, err error) {
+	hr, _, _ := syscall.Syscall6(
+		elem.VTable().FindFirst,
+		4,
+		uintptr(unsafe.Pointer(elem)),
 		uintptr(scope),
-		uintptr(unsafe.Pointer(cacheRequest)),
-		uintptr(unsafe.Pointer(handler)))
+		uintptr(unsafe.Pointer(condition)),
+		uintptr(unsafe.Pointer(&found)),
+		0,
+		0)
 	if hr != 0 {
-		return ole.NewError(hr)
+		err = ole.NewError(hr)
 	}
-	return nil
+	return
 }
 
-func removeStructureChangedEventHandler(auto *IUIAutomation, element *IUIAutomationElement, handler *IUIAutomationStructureChangedEventHandler) error {
-	hr, _, _ := syscall.SyscallN(
-		auto.VTable().RemoveStructureChangedEventHandler,
-		uintptr(unsafe.Pointer(auto)),
-		uintptr(unsafe.Pointer(element)),
-		uintptr(unsafe.Pointer(handler)))
+func findAll(elem *IUIAutomationElement, scope TreeScope, condition *IUIAutomationCondition) (found *IUIAutomationElementArray, err error) {
+	hr, _, _ := syscall.Syscall6(
+		elem.VTable().FindAll,
+		4,
+		uintptr(unsafe.Pointer(elem)),
+		uintptr(scope),
+		uintptr(unsafe.Pointer(condition)),
+		uintptr(unsafe.Pointer(&found)),
+		0,
+		0)
 	if hr != 0 {
-		return ole.NewError(hr)
+		err = ole.NewError(hr)
 	}
-	return nil
+	return
 }
 
-func removeAllEventHandlers(auto *IUIAutomation) error {
-	hr, _, _ := syscall.SyscallN(
-		auto.VTable().RemoveAllEventHandlers,
-		uintptr(unsafe.Pointer(auto)))
+func getCurrentPattern(elem *IUIAutomationElement, patternId PATTERNID) (pattern *ole.IUnknown, err error) {
+	hr, _, _ := syscall.Syscall(
+		elem.VTable().GetCurrentPattern,
+		3,
+		uintptr(unsafe.Pointer(elem)),
+		uintptr(patternId),
+		uintptr(unsafe.Pointer(&pattern)))
 	if hr != 0 {
-		return ole.NewError(hr)
+		err = ole.NewError(hr)
 	}
-	return nil
+	return
+}
+
+func get_CurrentAutomationId(elem *IUIAutomationElement) (id string, err error) {
+	var bstrAutomationId *uint16
+	hr, _, _ := syscall.SyscallN(
+		elem.VTable().Get_CurrentAutomationId,
+		uintptr(unsafe.Pointer(elem)),
+		uintptr(unsafe.Pointer(&bstrAutomationId)))
+	if hr != 0 {
+		err = ole.NewError(hr)
+		return
+	}
+
+	id = ole.BstrToString(bstrAutomationId)
+	return
+}
+
+func get_CurrentClassName(elem *IUIAutomationElement) (name string, err error) {
+	var bstrName *uint16
+	hr, _, _ := syscall.Syscall(
+		elem.VTable().Get_CurrentClassName,
+		2,
+		uintptr(unsafe.Pointer(elem)),
+		uintptr(unsafe.Pointer(&bstrName)),
+		0)
+	if hr != 0 {
+		err = ole.NewError(hr)
+		return
+	}
+	name = ole.BstrToString(bstrName)
+	return
+}
+
+func get_CurrentName(elem *IUIAutomationElement) (name string, err error) {
+	var bstrName *uint16
+	hr, _, _ := syscall.SyscallN(
+		elem.VTable().Get_CurrentName,
+		uintptr(unsafe.Pointer(elem)),
+		uintptr(unsafe.Pointer(&bstrName)))
+	if hr != 0 {
+		err = ole.NewError(hr)
+		return
+	}
+	name = ole.BstrToString(bstrName)
+	return
+}
+
+func get_CurrentNativeWindowHandle(elem *IUIAutomationElement) (handle syscall.Handle, err error) {
+	hr, _, _ := syscall.SyscallN(
+		elem.VTable().Get_CurrentNativeWindowHandle,
+		uintptr(unsafe.Pointer(elem)),
+		uintptr(unsafe.Pointer(&handle)))
+	if hr != 0 {
+		err = ole.NewError(hr)
+		return
+	}
+	return
+}
+
+func get_CurrentBoundingRectangle(elem *IUIAutomationElement) (rect w32.RECT, err error) {
+	hr, _, _ := syscall.SyscallN(
+		elem.VTable().Get_CurrentBoundingRectangle,
+		uintptr(unsafe.Pointer(elem)),
+		uintptr(unsafe.Pointer(&rect)))
+	if hr != 0 {
+		err = ole.NewError(hr)
+		return
+	}
+	return
+}
+
+func get_CurrentPropertyValue(elem *IUIAutomationElement, propertyid PROPERTYID) (ole.VARIANT, error) {
+	var v ole.VARIANT
+
+	ole.VariantInit(&v)
+
+	hr, _, _ := syscall.Syscall(
+		elem.VTable().GetCurrentPropertyValue,
+		3,
+		uintptr(unsafe.Pointer(elem)),
+		uintptr(propertyid),
+		uintptr(unsafe.Pointer(&v)))
+
+	if hr != 0 {
+		err := ole.NewError(hr)
+		return v, err
+	}
+
+	return v, nil
 }
