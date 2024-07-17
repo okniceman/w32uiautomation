@@ -117,6 +117,10 @@ func (elem *IUIAutomationElement) FindFirst(scope TreeScope, condition *IUIAutom
 	return findFirst(elem, scope, condition)
 }
 
+func (elem *IUIAutomationElement) FindAll(scope TreeScope, condition *IUIAutomationCondition) (found *IUIAutomationElementArray, err error) {
+	return findAll(elem, scope, condition)
+}
+
 func (elem *IUIAutomationElement) GetCurrentPattern(patternId PATTERNID) (*ole.IUnknown, error) {
 	return getCurrentPattern(elem, patternId)
 }
@@ -177,6 +181,22 @@ func getRuntimeId(elem *IUIAutomationElement) (runtimeId []interface{}, err erro
 func findFirst(elem *IUIAutomationElement, scope TreeScope, condition *IUIAutomationCondition) (found *IUIAutomationElement, err error) {
 	hr, _, _ := syscall.Syscall6(
 		elem.VTable().FindFirst,
+		4,
+		uintptr(unsafe.Pointer(elem)),
+		uintptr(scope),
+		uintptr(unsafe.Pointer(condition)),
+		uintptr(unsafe.Pointer(&found)),
+		0,
+		0)
+	if hr != 0 {
+		err = ole.NewError(hr)
+	}
+	return
+}
+
+func findAll(elem *IUIAutomationElement, scope TreeScope, condition *IUIAutomationCondition) (found *IUIAutomationElementArray, err error) {
+	hr, _, _ := syscall.Syscall6(
+		elem.VTable().FindAll,
 		4,
 		uintptr(unsafe.Pointer(elem)),
 		uintptr(scope),
