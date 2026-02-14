@@ -1,9 +1,9 @@
-# w32uiautomation
+# w32uiautomation - обретка над UIAutomation
+Библиотека используется для автоматизации взаимодействия с элементами пользовательского интерфейса на Golang.
 
-A library written in Go for Windows UI Automation.
-
-在原作者的基础上增加了相关方法
-
-## License
-
-MIT
+Подробнее можно прочитать здесь [UIAutomation на Microsoft](https://learn.microsoft.com/ru-ru/dotnet/framework/ui-automation/ui-automation-overview)
+## Правки к оригиналу
+- Добавил методы массива элементов
+- Добавил метод FindAll
+- Добавил метод поиска всех элементов
+- Поправил инициализацию IUIAutomation
