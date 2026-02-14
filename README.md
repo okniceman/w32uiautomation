@@ -1,4 +1,4 @@
-# w32uiautomation - обретка над UIAutomation
+# w32uiautomation - обертка над UIAutomation
 Библиотека используется для автоматизации взаимодействия с элементами пользовательского интерфейса на Golang.
 
 Подробнее можно прочитать здесь [UIAutomation на Microsoft](https://learn.microsoft.com/ru-ru/dotnet/framework/ui-automation/ui-automation-overview)
